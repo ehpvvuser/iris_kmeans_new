@@ -25,13 +25,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t  %IMAGE_NAME% .'
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                bat 'docker push $IMAGE_NAME'
+                bat 'docker push  %IMAGE_NAME% .'
             }
         }
     }
