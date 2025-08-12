@@ -15,20 +15,23 @@ pipeline {
         }
 
         stage('Docker Login') {
-            steps {
-                sh 'echo $GH_PAT | docker login ghcr.io -u $GH_USER --password-stdin'
-            }
+    steps {
+        withCredentials([string(credentialsId: 'ghcr_pat', variable: 'GH_PAT')]) {
+            bat 'echo %GH_PAT% | docker login ghcr.io -u ehpvvuser --password-stdin'
         }
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t $IMAGE_NAME .'
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push $IMAGE_NAME'
+                bat 'docker push $IMAGE_NAME'
             }
         }
     }
